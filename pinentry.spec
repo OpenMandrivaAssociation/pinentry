@@ -1,5 +1,5 @@
-%define version 0.7.2
-%define release %mkrel 6
+%define version 0.7.3
+%define release %mkrel 1
 
 Summary: 	Collection of simple PIN or passphrase entry dialogs
 Name: 		pinentry
