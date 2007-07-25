@@ -51,7 +51,10 @@ This package provides QT interface of the dialog.
 
 %build
 export QTLIB="%{_prefix}/lib/qt3/%{_lib}"
-%configure2_5x --enable-pinentry-gtk=no
+%configure2_5x \
+	--disable-pinentry-gtk \
+	--enable-pinentry-gtk2 \
+	--disable-rpath
 %make
 
 %install
