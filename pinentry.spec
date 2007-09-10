@@ -1,5 +1,5 @@
 %define version 0.7.3
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: 	Collection of simple PIN or passphrase entry dialogs
 Name: 		pinentry
@@ -7,6 +7,7 @@ Version: 	%{version}
 Release: 	%{release}
 Source0: 	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1:	%{SOURCE0}.sig
+Patch0:		pinentry-0.7.3-fix-info-header.patch
 License: 	GPL
 Group: 		System/Kernel and hardware
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -48,9 +49,9 @@ This package provides QT interface of the dialog.
 
 %prep
 %setup -q
+%patch0 -p1 -b .headerfix
 
 %build
-export QTLIB="%{_prefix}/lib/qt3/%{_lib}"
 %configure2_5x \
 	--disable-pinentry-gtk \
 	--enable-pinentry-gtk2 \
@@ -64,9 +65,6 @@ rm -rf %{buildroot}
 #Remove link we will use update alternative
 rm -f %{buildroot}%{_bindir}/pinentry
 
-%clean
-rm -rf %{buildroot}
-
 %post 
 %_install_info %{name}.info
 update-alternatives --install /usr/bin/pinentry pinentry /usr/bin/pinentry-curses 10
@@ -74,6 +72,21 @@ update-alternatives --install /usr/bin/pinentry pinentry /usr/bin/pinentry-curse
 %preun 
 %_remove_install_info %{name}.info
 update-alternatives --remove pinentry /usr/bin/pinentry-curses
+
+%post gtk
+update-alternatives --install /usr/bin/pinentry pinentry /usr/bin/pinentry-gtk-2 20
+
+%postun gtk
+update-alternatives --remove pinentry /usr/bin/pinentry-gtk-2
+
+%post qt
+update-alternatives --install /usr/bin/pinentry pinentry /usr/bin/pinentry-qt 30
+
+%postun qt
+update-alternatives --remove pinentry /usr/bin/pinentry-qt
+
+%clean
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
@@ -88,15 +101,3 @@ update-alternatives --remove pinentry /usr/bin/pinentry-curses
 %files qt
 %defattr(-,root,root)
 %{_bindir}/pinentry-qt
-
-%post gtk
-update-alternatives --install /usr/bin/pinentry pinentry /usr/bin/pinentry-gtk-2 20
-
-%postun gtk
-update-alternatives --remove pinentry /usr/bin/pinentry-gtk-2
-
-%post qt
-update-alternatives --install /usr/bin/pinentry pinentry /usr/bin/pinentry-qt 30
-
-%postun qt
-update-alternatives --remove pinentry /usr/bin/pinentry-qt
