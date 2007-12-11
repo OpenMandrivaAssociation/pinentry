@@ -1,5 +1,5 @@
-%define version 0.7.3
-%define release %mkrel 2
+%define version 0.7.4
+%define release %mkrel 1
 
 Summary: 	Collection of simple PIN or passphrase entry dialogs
 Name: 		pinentry
@@ -49,7 +49,7 @@ This package provides QT interface of the dialog.
 
 %prep
 %setup -q
-%patch0 -p1 -b .headerfix
+#%patch0 -p1 -b .headerfix
 
 %build
 %configure2_5x \
