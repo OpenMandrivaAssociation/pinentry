@@ -10,7 +10,6 @@ Source1:	%{SOURCE0}.sig
 Patch0:		pinentry-0.7.3-fix-info-header.patch
 License: 	GPL
 Group: 		System/Kernel and hardware
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL: 		http://www.gnupg.org/
 
 Requires(post): info-install
