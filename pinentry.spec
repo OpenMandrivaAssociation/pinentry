@@ -7,17 +7,14 @@ Version: 	%{version}
 Release: 	%{release}
 Source0: 	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1:	%{SOURCE0}.sig
-Patch0:		pinentry-0.7.3-fix-info-header.patch
 License: 	GPLv2+
 Group: 		System/Kernel and hardware
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL: 		http://www.gnupg.org/
-
 Requires(post): info-install
 Requires(preun):info-install
-
 BuildRequires:	libgtk+2.0-devel
-#BuildRequires:	libcap-devel
+BuildRequires:	libcap-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	qt3-devel
 
@@ -49,7 +46,6 @@ This package provides QT interface of the dialog.
 
 %prep
 %setup -q
-#%patch0 -p1 -b .headerfix
 
 %build
 %configure2_5x \
