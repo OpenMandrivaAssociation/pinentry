@@ -1,4 +1,4 @@
-%define version 0.7.4
+%define version 0.7.5
 %define release %mkrel 1
 
 Summary: 	Collection of simple PIN or passphrase entry dialogs
@@ -8,7 +8,7 @@ Release: 	%{release}
 Source0: 	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1:	%{SOURCE0}.sig
 Patch0:		pinentry-0.7.3-fix-info-header.patch
-License: 	GPL
+License: 	GPLv2+
 Group: 		System/Kernel and hardware
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL: 		http://www.gnupg.org/
