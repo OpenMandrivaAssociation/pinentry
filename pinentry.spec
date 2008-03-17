@@ -26,10 +26,23 @@ BuildRequires:	qt3-devel
 %{name} is a collection of simple PIN or passphrase entry dialogs which
 utilize the Assuan protocol as described by the aegypten project.
 
+%package	curses
+Summary:	Ncurses interface of pinentry
+Group: 		System/Kernel and hardware
+Provides:	%{name} = %{version}-%{release}
+Obsoletes:	%{name} < 0.7.5
+
+%description	curses
+%{name} is a collection of simple PIN or passphrase entry dialogs which
+utilize the Assuan protocol as described by the aegypten project.
+
+This package provides Ncurses interface of the dialog.
+
 %package	gtk
 Summary:	GTK+ interface of pinentry
 Group: 		System/Kernel and hardware
-Requires:	%{name} = %{version}-%{release}
+Provides:	%{name} = %{version}-%{release}
+Requires:	%{name}-curses = %{version}-%{release}
 
 %description	gtk
 %{name} is a collection of simple PIN or passphrase entry dialogs which
@@ -40,7 +53,8 @@ This package provides GTK+ interface of the dialog.
 %package	qt
 Summary:	QT interface of pinentry
 Group: 		System/Kernel and hardware
-Requires:	%{name} = %{version}-%{release}
+Provides:	%{name} = %{version}-%{release}
+Requires:	%{name}-curses = %{version}-%{release}
 
 %description	qt
 %{name} is a collection of simple PIN or passphrase entry dialogs which
@@ -91,7 +105,7 @@ update-alternatives --remove pinentry /usr/bin/pinentry-qt
 %clean
 rm -rf %{buildroot}
 
-%files
+%files curses
 %defattr(-,root,root)
 %doc README TODO ChangeLog NEWS AUTHORS THANKS
 %{_bindir}/pinentry-curses
