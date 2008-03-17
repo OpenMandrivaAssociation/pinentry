@@ -8,6 +8,7 @@ Release: 	%{release}
 Source0: 	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1:	%{SOURCE0}.sig
 Patch0:		pinentry-0.7.5-glib-fix.patch
+Patch1:		http://sources.gentoo.org/viewcvs.py/*checkout*/gentoo-x86/app-crypt/pinentry/files/pinentry-0.7.4-grab.patch
 License: 	GPLv2+
 Group: 		System/Kernel and hardware
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -48,6 +49,7 @@ This package provides QT interface of the dialog.
 %prep
 %setup -q
 %patch0 -p0 -b .glib-fix
+%patch1 -p1 -b .grab
 
 %build
 %configure2_5x \
