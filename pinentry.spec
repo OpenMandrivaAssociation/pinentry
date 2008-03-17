@@ -9,6 +9,8 @@ Source0: 	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1:	%{SOURCE0}.sig
 Patch0:		pinentry-0.7.5-glib-fix.patch
 Patch1:		http://sources.gentoo.org/viewcvs.py/*checkout*/gentoo-x86/app-crypt/pinentry/files/pinentry-0.7.4-grab.patch
+# svn diff -c 181 svn://cvs.gnupg.org/pinentry/trunk
+Patch2:		pinentry-0.7.5-realize-transient.patch
 License: 	GPLv2+
 Group: 		System/Kernel and hardware
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -50,6 +52,7 @@ This package provides QT interface of the dialog.
 %setup -q
 %patch0 -p0 -b .glib-fix
 %patch1 -p1 -b .grab
+%patch2 -p0 -b .realize-transient
 
 %build
 %configure2_5x \
