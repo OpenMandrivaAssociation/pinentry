@@ -88,19 +88,25 @@ update-alternatives --install /usr/bin/pinentry pinentry /usr/bin/pinentry-curse
 
 %preun 
 %_remove_install_info %{name}.info
-update-alternatives --remove pinentry /usr/bin/pinentry-curses
+if [ "$1" = "0" ]; then
+   update-alternatives --remove pinentry /usr/bin/pinentry-curses
+fi
 
 %post gtk
 update-alternatives --install /usr/bin/pinentry pinentry /usr/bin/pinentry-gtk-2 20
 
 %postun gtk
-update-alternatives --remove pinentry /usr/bin/pinentry-gtk-2
+if [ "$1" = "0" ]; then
+   update-alternatives --remove pinentry /usr/bin/pinentry-gtk-2
+fi
 
 %post qt
 update-alternatives --install /usr/bin/pinentry pinentry /usr/bin/pinentry-qt 30
 
 %postun qt
-update-alternatives --remove pinentry /usr/bin/pinentry-qt
+if [ "$1" = "0" ]; then
+   update-alternatives --remove pinentry /usr/bin/pinentry-qt
+fi
 
 %clean
 rm -rf %{buildroot}
