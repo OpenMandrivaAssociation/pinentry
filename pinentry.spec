@@ -1,7 +1,7 @@
 
 Name: pinentry
 Version: 0.7.5
-Release: %mkrel 3
+Release: %mkrel 4
 Summary: Collection of simple PIN or passphrase entry dialogs
 Source0: ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1: %{SOURCE0}.sig
@@ -73,7 +73,7 @@ utilize the Assuan protocol as described by the aegypten project.
 This package provides GTK+ interface of the dialog.
 
 %post gtk2
-update-alternatives --install /usr/bin/pinentry pinentry /usr/bin/pinentry-gtk-2 20
+update-alternatives --install /usr/bin/pinentry pinentry /usr/bin/pinentry-gtk-2 20 --slave /usr/bin/pinentry-gtk pinentry-gtk /usr/bin/pinentry-gtk-2
 
 %postun gtk2
 if [ "$1" = "0" ]; then
@@ -100,7 +100,7 @@ utilize the Assuan protocol as described by the aegypten project.
 This package provides QT4 interface of the dialog.
 
 %post qt4
-update-alternatives --install /usr/bin/pinentry pinentry /usr/bin/pinentry-qt4 30
+update-alternatives --install /usr/bin/pinentry pinentry /usr/bin/pinentry-qt4 30 --slave /usr/bin/pinentry-qt pinentry-qt /usr/bin/pinentry-qt4
 
 %postun qt4
 if [ "$1" = "0" ]; then
