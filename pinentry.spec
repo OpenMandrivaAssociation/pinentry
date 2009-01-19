@@ -1,16 +1,16 @@
 
 Name: pinentry
 Version: 0.7.5
-Release: %mkrel 4
+Release: %mkrel 5
 Summary: Collection of simple PIN or passphrase entry dialogs
 Source0: ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1: %{SOURCE0}.sig
-# Taken from KDE 4 svn
-Source2: pinentry-qt4-svn906288.tar.bz2
 Patch0: pinentry-0.7.5-glib-fix.patch
 Patch1: http://sources.gentoo.org/viewcvs.py/*checkout*/gentoo-x86/app-crypt/pinentry/files/pinentry-0.7.4-grab.patch
 # svn diff -c 181 svn://cvs.gnupg.org/pinentry/trunk
 Patch2: pinentry-0.7.5-realize-transient.patch
+# Adapted to autotools from KDE 4 source
+Patch3: pinentry-qt4-autotools.patch
 License: GPLv2+
 Group: System/Kernel and hardware
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -21,7 +21,6 @@ BuildRequires: libgtk+2.0-devel
 BuildRequires: libcap-devel
 BuildRequires: ncurses-devel
 BuildRequires: qt4-devel
-BuildRequires: cmake
 
 %description 
 %{name} is a collection of simple PIN or passphrase entry dialogs which
@@ -114,29 +113,26 @@ fi
 #-----------------------------------------------------------------------------------------
 
 %prep
-%setup -q -a 2
+%setup -q 
 %patch0 -p0 -b .glib-fix
 %patch1 -p1 -b .grab
 %patch2 -p0 -b .realize-transient
+%patch3 -p1 -b .qt4
 
 %build
+./autogen.sh
+
 %configure2_5x \
 	--disable-pinentry-gtk \
 	--disable-pinentry-qt \
+	--enable-pinentry-qt4 \
 	--enable-pinentry-gtk2 \
 	--disable-rpath
 %make
 
-cd pinentry-qt4
-%cmake_qt4
-%make
-
-
 %install
 rm -rf %{buildroot}
 %makeinstall_std
-
-%makeinstall_std -C pinentry-qt4/build
 
 #Remove link we will use update alternative
 rm -f %{buildroot}%{_bindir}/pinentry
