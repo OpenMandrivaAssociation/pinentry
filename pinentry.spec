@@ -1,7 +1,7 @@
 
 Name: pinentry
 Version: 0.7.5
-Release: %mkrel 6
+Release: %mkrel 7
 Summary: Collection of simple PIN or passphrase entry dialogs
 Source0: ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1: %{SOURCE0}.sig
@@ -20,6 +20,7 @@ Requires(preun):info-install
 BuildRequires: libgtk+2.0-devel
 BuildRequires: libcap-devel
 BuildRequires: ncurses-devel
+BuildRequires: qt3-devel
 BuildRequires: qt4-devel
 
 %description 
@@ -90,7 +91,6 @@ Summary: QT4 interface of pinentry
 Group: System/Kernel and hardware
 Provides: %{name} = %{version}-%{release}
 Requires: %{name}-curses = %{version}-%{release}
-Obsoletes: pinentry-qt
 
 %description qt4
 %{name} is a collection of simple PIN or passphrase entry dialogs which
@@ -112,6 +112,32 @@ fi
 
 #-----------------------------------------------------------------------------------------
 
+%package qt
+Summary: QT3 interface of pinentry
+Group: System/Kernel and hardware
+Provides: %{name} = %{version}-%{release}
+Requires: %{name}-curses = %{version}-%{release}
+
+%description qt
+%{name} is a collection of simple PIN or passphrase entry dialogs which
+utilize the Assuan protocol as described by the aegypten project.
+
+This package provides QT3 interface of the dialog.
+
+%post qt
+update-alternatives --install /usr/bin/pinentry pinentry /usr/bin/pinentry-qt 10 --slave /usr/bin/pinentry-qt pinentry-qt /usr/bin/pinentry-qt
+
+%postun qt
+if [ "$1" = "0" ]; then
+   update-alternatives --remove pinentry /usr/bin/pinentry-qt3
+fi
+
+%files qt
+%defattr(-,root,root)
+%{_bindir}/pinentry-qt
+
+#-----------------------------------------------------------------------------------------
+
 %prep
 %setup -q 
 %patch0 -p0 -b .glib-fix
@@ -124,9 +150,11 @@ fi
 
 %configure2_5x \
 	--disable-pinentry-gtk \
-	--disable-pinentry-qt \
+	--enable-pinentry-qt \
 	--enable-pinentry-qt4 \
 	--enable-pinentry-gtk2 \
+    --with-qt-dir=%qt3dir \
+    --with-qt4-dir=%qt4dir \
 	--disable-rpath
 %make
 
