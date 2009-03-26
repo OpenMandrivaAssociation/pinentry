@@ -22,6 +22,7 @@ BuildRequires: libcap-devel
 BuildRequires: ncurses-devel
 BuildRequires: qt3-devel
 BuildRequires: qt4-devel
+BuildRequires: gettext-devel
 
 %description 
 %{name} is a collection of simple PIN or passphrase entry dialogs which
