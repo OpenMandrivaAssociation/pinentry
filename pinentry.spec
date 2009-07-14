@@ -1,16 +1,12 @@
 
 Name: pinentry
-Version: 0.7.5
-Release: %mkrel 7
+Version: 0.7.6
+Release: %mkrel 1
 Summary: Collection of simple PIN or passphrase entry dialogs
 Source0: ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1: %{SOURCE0}.sig
-Patch0: pinentry-0.7.5-glib-fix.patch
-Patch1: http://sources.gentoo.org/viewcvs.py/*checkout*/gentoo-x86/app-crypt/pinentry/files/pinentry-0.7.4-grab.patch
-# svn diff -c 181 svn://cvs.gnupg.org/pinentry/trunk
-Patch2: pinentry-0.7.5-realize-transient.patch
-# Adapted to autotools from KDE 4 source
-Patch3: pinentry-qt4-autotools.patch
+# Build with QT 4.5: http://bugs.gentoo.org/show_bug.cgi?id=274999#c2
+Patch0: pinentry-0.7.6-moc.patch
 License: GPLv2+
 Group: System/Kernel and hardware
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -141,10 +137,7 @@ fi
 
 %prep
 %setup -q 
-%patch0 -p0 -b .glib-fix
-%patch1 -p1 -b .grab
-%patch2 -p0 -b .realize-transient
-%patch3 -p1 -b .qt4
+%patch0 -p1 -b .moc
 
 %build
 ./autogen.sh
@@ -157,8 +150,8 @@ fi
     --with-qt-dir=%qt3dir \
     --with-qt4-dir=%qt4dir \
 	--disable-rpath
-%make
 
+%make
 %install
 rm -rf %{buildroot}
 %makeinstall_std
