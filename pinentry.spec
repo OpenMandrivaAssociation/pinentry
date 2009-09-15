@@ -1,7 +1,8 @@
+%bcond_with qt3
 
 Name: pinentry
 Version: 0.7.6
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: Collection of simple PIN or passphrase entry dialogs
 Source0: ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1: %{SOURCE0}.sig
@@ -16,7 +17,6 @@ Requires(preun):info-install
 BuildRequires: libgtk+2.0-devel
 BuildRequires: libcap-devel
 BuildRequires: ncurses-devel
-BuildRequires: qt3-devel
 BuildRequires: qt4-devel
 BuildRequires: gettext-devel
 
@@ -109,11 +109,13 @@ fi
 
 #-----------------------------------------------------------------------------------------
 
+%if %with qt3
 %package qt
 Summary: QT3 interface of pinentry
 Group: System/Kernel and hardware
 Provides: %{name} = %{version}-%{release}
 Requires: %{name}-curses = %{version}-%{release}
+BuildRequires: qt3-devel
 
 %description qt
 %{name} is a collection of simple PIN or passphrase entry dialogs which
@@ -133,6 +135,8 @@ fi
 %defattr(-,root,root)
 %{_bindir}/pinentry-qt
 
+%endif
+
 #-----------------------------------------------------------------------------------------
 
 %prep
@@ -144,10 +148,14 @@ fi
 
 %configure2_5x \
 	--disable-pinentry-gtk \
+%if	%with qt3
 	--enable-pinentry-qt \
+    --with-qt-dir=%qt3dir \
+%else
+	--disable-pinentry-qt \
+%endif
 	--enable-pinentry-qt4 \
 	--enable-pinentry-gtk2 \
-    --with-qt-dir=%qt3dir \
     --with-qt4-dir=%qt4dir \
 	--disable-rpath
 
@@ -158,7 +166,6 @@ rm -rf %{buildroot}
 
 #Remove link we will use update alternative
 rm -f %{buildroot}%{_bindir}/pinentry
-
 
 %clean
 rm -rf %{buildroot}
