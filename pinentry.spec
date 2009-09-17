@@ -2,7 +2,7 @@
 
 Name: pinentry
 Version: 0.7.6
-Release: %mkrel 2
+Release: %mkrel 3
 Summary: Collection of simple PIN or passphrase entry dialogs
 Source0: ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1: %{SOURCE0}.sig
@@ -88,7 +88,9 @@ Summary: QT4 interface of pinentry
 Group: System/Kernel and hardware
 Provides: %{name} = %{version}-%{release}
 Requires: %{name}-curses = %{version}-%{release}
-
+%if ! %with qt3
+Obsoletes: %name-qt < 0.7.6-3
+%endif
 %description qt4
 %{name} is a collection of simple PIN or passphrase entry dialogs which
 utilize the Assuan protocol as described by the aegypten project.
