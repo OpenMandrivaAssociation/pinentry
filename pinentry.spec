@@ -1,13 +1,11 @@
 %bcond_with qt3
 
 Name: pinentry
-Version: 0.7.6
-Release: %mkrel 3
+Version: 0.8.0
+Release: %mkrel 1
 Summary: Collection of simple PIN or passphrase entry dialogs
 Source0: ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1: %{SOURCE0}.sig
-# Build with QT 4.5: http://bugs.gentoo.org/show_bug.cgi?id=274999#c2
-Patch0: pinentry-0.7.6-moc.patch
 License: GPLv2+
 Group: System/Kernel and hardware
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -143,7 +141,6 @@ fi
 
 %prep
 %setup -q 
-%patch0 -p1 -b .moc
 
 %build
 ./autogen.sh
