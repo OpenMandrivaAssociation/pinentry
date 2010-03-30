@@ -1,5 +1,3 @@
-%bcond_with qt3
-
 Name: pinentry
 Version: 0.8.0
 Release: %mkrel 2
@@ -63,9 +61,8 @@ Summary: QT4 interface of pinentry
 Group: System/Kernel and hardware
 Provides: %{name}-gui = %{version}-%{release}
 Requires: %{name} = %{version}-%{release}
-%if ! %with qt3
 Obsoletes: %name-qt < 0.7.6-3
-%endif
+
 %description qt4
 %{name} is a collection of simple PIN or passphrase entry dialogs which
 utilize the Assuan protocol as described by the aegypten project.
@@ -78,26 +75,6 @@ This package provides QT4 interface of the dialog.
 
 #-----------------------------------------------------------------------------------------
 
-%if %with qt3
-%package qt
-Summary: QT3 interface of pinentry
-Group: System/Kernel and hardware
-Provides: %{name}-gui = %{version}-%{release}
-Requires: %{name} = %{version}-%{release}
-BuildRequires: qt3-devel
-
-%description qt
-%{name} is a collection of simple PIN or passphrase entry dialogs which
-utilize the Assuan protocol as described by the aegypten project.
-
-This package provides QT3 interface of the dialog.
-
-%files qt
-%defattr(-,root,root)
-%{_bindir}/pinentry-qt
-
-%endif
-
 #-----------------------------------------------------------------------------------------
 
 %prep
@@ -108,12 +85,7 @@ This package provides QT3 interface of the dialog.
 
 %configure2_5x \
 	--disable-pinentry-gtk \
-%if	%with qt3
-	--enable-pinentry-qt \
-    --with-qt-dir=%qt3dir \
-%else
 	--disable-pinentry-qt \
-%endif
 	--enable-pinentry-qt4 \
 	--enable-pinentry-gtk2 \
     --with-qt4-dir=%qt4dir \
