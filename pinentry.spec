@@ -1,6 +1,6 @@
 Name: pinentry
 Version: 0.8.0
-Release: %mkrel 2
+Release: %mkrel 3
 Summary: Collection of simple PIN or passphrase entry dialogs
 Source0: ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1: %{SOURCE0}.sig
@@ -71,7 +71,7 @@ This package provides QT4 interface of the dialog.
 
 %files qt4
 %defattr(-,root,root)
-%{_bindir}/pinentry-qt4
+%{_bindir}/pinentry-qt*
 
 #-----------------------------------------------------------------------------------------
 
@@ -95,6 +95,10 @@ rm -rf %{buildroot}
 %makeinstall_std
 
 install -p -m755 -D %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/pinentry 
+
+pushd $RPM_BUILD_ROOT%{_bindir}
+ln -s pinentry-qt4 pinentry-qt
+popd
 
 %clean
 rm -rf %{buildroot}
