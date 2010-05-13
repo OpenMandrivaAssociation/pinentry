@@ -1,10 +1,11 @@
 Name: pinentry
 Version: 0.8.0
-Release: %mkrel 3
+Release: %mkrel 4
 Summary: Collection of simple PIN or passphrase entry dialogs
 Source0: ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1: %{SOURCE0}.sig
 Source2: pinentry-wrapper
+Patch1:  0004-Fix-qt4-pinentry-window-created-in-the-background.patch
 License: GPLv2+
 Group: System/Kernel and hardware
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -77,6 +78,7 @@ This package provides QT4 interface of the dialog.
 
 %prep
 %setup -q 
+%patch1 -p1
 
 %build
 ./autogen.sh
