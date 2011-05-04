@@ -1,6 +1,6 @@
 Name:		pinentry
 Version:	0.8.1
-Release:	%mkrel 2
+Release:	%mkrel 3
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Source0:	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1:	%{SOURCE0}.sig
