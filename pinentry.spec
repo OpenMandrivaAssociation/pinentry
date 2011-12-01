@@ -95,9 +95,9 @@ This package provides QT4 interface of the dialog.
 rm -rf %{buildroot}
 %makeinstall_std
 
-install -p -m755 -D %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/pinentry 
+install -p -m755 -D %{SOURCE2} %{buildroot}%{_bindir}/pinentry 
 
-pushd $RPM_BUILD_ROOT%{_bindir}
+pushd %{buildroot}%{_bindir}
 ln -s pinentry-qt4 pinentry-qt
 popd
 
