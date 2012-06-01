@@ -1,6 +1,6 @@
 Name:		pinentry
 Version:	0.8.1
-Release:	%mkrel 3
+Release:	%mkrel 4
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Source0:	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
 Source1:	%{SOURCE0}.sig
@@ -9,8 +9,6 @@ License:	GPLv2+
 Group:		System/Kernel and hardware
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://www.gnupg.org/
-Requires(post):	info-install
-Requires(preun):info-install
 BuildRequires:	libgtk+2.0-devel
 BuildRequires:	libcap-devel
 BuildRequires:	ncurses-devel
