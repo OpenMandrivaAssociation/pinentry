@@ -1,13 +1,12 @@
 Name:		pinentry
-Version:	0.8.1
-Release:	%mkrel 4
+Version:	0.8.2
+Release:	%mkrel 1
 Summary:	Collection of simple PIN or passphrase entry dialogs
-Source0:	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.bz2
 Source1:	%{SOURCE0}.sig
 Source2:	pinentry-wrapper
 License:	GPLv2+
 Group:		System/Kernel and hardware
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://www.gnupg.org/
 BuildRequires:	libgtk+2.0-devel
 BuildRequires:	libcap-devel
@@ -28,7 +27,6 @@ utilize the Assuan protocol as described by the aegypten project.
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-qt4 ||:
 
 %files 
-%defattr(-,root,root)
 %doc README TODO ChangeLog NEWS AUTHORS THANKS
 %{_bindir}/pinentry
 %{_bindir}/pinentry-curses
@@ -50,7 +48,6 @@ utilize the Assuan protocol as described by the aegypten project.
 This package provides GTK+ interface of the dialog.
 
 %files		gtk2
-%defattr(-,root,root)
 %_bindir/pinentry-gtk-2
 
 #-----------------------------------------------------------------------------------------
@@ -69,7 +66,6 @@ utilize the Assuan protocol as described by the aegypten project.
 This package provides QT4 interface of the dialog.
 
 %files		qt4
-%defattr(-,root,root)
 %{_bindir}/pinentry-qt*
 
 #-----------------------------------------------------------------------------------------
@@ -90,7 +86,6 @@ This package provides QT4 interface of the dialog.
 
 %make
 %install
-rm -rf %{buildroot}
 %makeinstall_std
 
 install -p -m755 -D %{SOURCE2} %{buildroot}%{_bindir}/pinentry 
@@ -98,8 +93,3 @@ install -p -m755 -D %{SOURCE2} %{buildroot}%{_bindir}/pinentry
 pushd %{buildroot}%{_bindir}
 ln -s pinentry-qt4 pinentry-qt
 popd
-
-%clean
-rm -rf %{buildroot}
-
-
