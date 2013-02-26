@@ -8,7 +8,7 @@ Source2:	pinentry-wrapper
 License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://www.gnupg.org/
-BuildRequires:	libgtk+2.0-devel
+BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	libcap-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	qt4-devel
