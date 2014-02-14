@@ -1,3 +1,5 @@
+%bcond_with bootstrap
+
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
 Version:	0.8.2
@@ -10,8 +12,10 @@ Source1:	%{SOURCE0}.sig
 Source2:	pinentry-wrapper
 BuildRequires:	cap-devel
 BuildRequires:	gettext-devel
+%if !%{with bootstrap}
 BuildRequires:	qt4-devel
 BuildRequires:	pkgconfig(gtk+-2.0)
+%endif
 BuildRequires:	pkgconfig(ncurses)
 Obsoletes:	%{name}-curses < 0.8.0-2
 Suggests:	%{name}-gui
@@ -22,9 +26,11 @@ utilize the Assuan protocol as described by the aegypten project.
 
 %pre
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-curses ||:
+%if !%{with bootstrap}
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-gtk ||:
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-qt ||:
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-qt4 ||:
+%endif
 
 %files 
 %doc README TODO ChangeLog NEWS AUTHORS THANKS
@@ -34,6 +40,7 @@ utilize the Assuan protocol as described by the aegypten project.
 
 #------------------------------------------------------------------------------
 
+%if !%{with bootstrap}
 %package	gtk2
 Summary:	GTK+ interface of pinentry
 Group:		System/Kernel and hardware
@@ -67,7 +74,7 @@ This package provides QT4 interface of the dialog.
 
 %files		qt4
 %{_bindir}/pinentry-qt*
-
+%endif
 #------------------------------------------------------------------------------
 
 %prep
@@ -76,11 +83,13 @@ This package provides QT4 interface of the dialog.
 
 %build
 %configure2_5x \
+%if !%{with bootstrap}
 	--disable-pinentry-gtk \
 	--disable-pinentry-qt \
 	--enable-pinentry-qt4 \
 	--enable-pinentry-gtk2 \
 	--with-qt4-dir=%qt4dir \
+%endif
 
 %make
 
@@ -89,7 +98,8 @@ This package provides QT4 interface of the dialog.
 
 install -p -m755 -D %{SOURCE2} %{buildroot}%{_bindir}/pinentry 
 
+%if !%{with bootstrap}
 pushd %{buildroot}%{_bindir}
 ln -s pinentry-qt4 pinentry-qt
 popd
-
+%endif
