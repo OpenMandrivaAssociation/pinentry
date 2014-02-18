@@ -10,6 +10,7 @@ Url:		http://www.gnupg.org/
 Source0:	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.bz2
 Source1:	%{SOURCE0}.sig
 Source2:	pinentry-wrapper
+Requires(pre):	update-alternatives
 BuildRequires:	cap-devel
 BuildRequires:	gettext-devel
 %if !%{with bootstrap}
