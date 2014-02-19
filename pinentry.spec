@@ -9,7 +9,7 @@ License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://www.gnupg.org/
 BuildRequires:	pkgconfig(gtk+-2.0)
-BuildRequires:	cap-devel = 2.22-5
+BuildRequires:	cap-devel >= 2.22-5
 BuildRequires:	ncurses-devel
 BuildRequires:	qt4-devel
 BuildRequires:	gettext-devel
