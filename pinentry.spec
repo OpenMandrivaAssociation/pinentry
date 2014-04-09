@@ -1,4 +1,8 @@
+%ifnarch aarch64
 %bcond_with bootstrap
+%else
+%bcond_without bootstrap
+%endif
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
