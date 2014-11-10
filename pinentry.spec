@@ -6,8 +6,8 @@
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
-Version:	0.8.3
-Release:	2
+Version:	0.8.4
+Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
@@ -86,14 +86,16 @@ This package provides QT4 interface of the dialog.
 %setup -q 
 ./autogen.sh
 
+for f in qt4/*.moc; do
+	%{_bindir}/moc ${f/.moc/.h} > ${f}
+done
+
 %build
-%configure2_5x \
+%configure \
 %if !%{with bootstrap}
-	--disable-pinentry-gtk \
-	--disable-pinentry-qt \
 	--enable-pinentry-qt4 \
 	--enable-pinentry-gtk2 \
-	--with-qt4-dir=%qt4dir \
+	--with-qt-dir=%qt4dir \
 %endif
 
 %make
