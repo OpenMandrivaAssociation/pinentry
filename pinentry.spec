@@ -19,6 +19,7 @@ BuildRequires:	cap-devel
 BuildRequires:	gettext-devel
 %if !%{with bootstrap}
 BuildRequires:	qt4-devel
+BuildRequires:	qtchooser
 BuildRequires:	pkgconfig(gtk+-2.0)
 %endif
 BuildRequires:	pkgconfig(ncurses)
@@ -86,9 +87,11 @@ This package provides QT4 interface of the dialog.
 %setup -q 
 ./autogen.sh
 
+%if !%{with bootstrap}
 for f in qt4/*.moc; do
 	%{_bindir}/moc ${f/.moc/.h} > ${f}
 done
+%endif
 
 %build
 %configure \
