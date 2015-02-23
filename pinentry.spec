@@ -6,13 +6,12 @@
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
-Version:	0.8.4
-Release:	2
+Version:	0.9.0
+Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
 Source0:	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.bz2
-Source1:	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.bz2.sig
 Source2:	pinentry-wrapper
 Requires(pre):	update-alternatives
 BuildRequires:	cap-devel
