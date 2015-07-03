@@ -6,7 +6,7 @@
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
-Version:	0.9.0
+Version:	0.9.5
 Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
@@ -16,6 +16,8 @@ Source2:	pinentry-wrapper
 Requires(pre):	update-alternatives
 BuildRequires:	cap-devel
 BuildRequires:	gettext-devel
+BuildRequires:	pkgconfig(gpg-error)
+BuildRequires:	libassuan-devel
 %if !%{with bootstrap}
 BuildRequires:	qt4-devel
 BuildRequires:	qtchooser
@@ -31,6 +33,7 @@ utilize the Assuan protocol as described by the aegypten project.
 
 %pre
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-curses ||:
+%{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-emacs ||:
 %if !%{with bootstrap}
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-gtk ||:
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-qt ||:
@@ -41,6 +44,7 @@ utilize the Assuan protocol as described by the aegypten project.
 %doc README TODO ChangeLog NEWS AUTHORS THANKS
 %{_bindir}/pinentry
 %{_bindir}/pinentry-curses
+%{_bindir}/pinentry-emacs
 %{_infodir}/*.info*
 
 #------------------------------------------------------------------------------
@@ -86,17 +90,18 @@ This package provides QT4 interface of the dialog.
 %setup -q 
 ./autogen.sh
 
-%if !%{with bootstrap}
-for f in qt4/*.moc; do
-	%{_bindir}/moc ${f/.moc/.h} > ${f}
-done
-%endif
+#% if !%{with bootstrap}
+#for f in qt4/*.moc; do
+#	%{_bindir}/moc ${f/.moc/.h} > ${f}
+#done
+#% endif
 
 %build
 %configure \
 %if !%{with bootstrap}
 	--enable-pinentry-qt4 \
 	--enable-pinentry-gtk2 \
+	MOC=%{_bindir}/moc \
 	--with-qt-dir=%qt4dir \
 %endif
 
