@@ -1,13 +1,11 @@
-%ifnarch aarch64
-%bcond_with bootstrap
-%else
-%bcond_without bootstrap
-%endif
+%bcond_without	qt5
+%bcond_without	gtk2
+%bcond_without	ncurses
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
-Version:	0.9.5
-Release:	2
+Version:	0.9.6
+Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
@@ -18,12 +16,16 @@ BuildRequires:	cap-devel
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	libassuan-devel
-%if !%{with bootstrap}
-BuildRequires:	qt4-devel
-BuildRequires:	qtchooser
+%if %{with qt5}
+BuildRequires:	qt5-devel
+%endif
+
+%if %{with gtk2}
 BuildRequires:	pkgconfig(gtk+-2.0)
 %endif
+%if %{with ncurses}
 BuildRequires:	pkgconfig(ncurses)
+%endif
 Obsoletes:	%{name}-curses < 0.8.0-2
 Suggests:	%{name}-gui
 
@@ -32,24 +34,27 @@ Suggests:	%{name}-gui
 utilize the Assuan protocol as described by the aegypten project.
 
 %pre
+%if %{with ncurses}
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-curses ||:
-%{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-emacs ||:
-%if !%{with bootstrap}
+%endif
+%if !%{with gtk2}
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-gtk ||:
+%if !%{with qt5}
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-qt ||:
-%{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-qt4 ||:
+%{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-qt5 ||:
+%endif
 %endif
 
 %files 
 %doc README TODO ChangeLog NEWS AUTHORS THANKS
 %{_bindir}/pinentry
+%if %{with ncurses}
 %{_bindir}/pinentry-curses
-%{_bindir}/pinentry-emacs
 %{_infodir}/*.info*
 
 #------------------------------------------------------------------------------
 
-%if !%{with bootstrap}
+%if %{with gtk2}
 %package	gtk2
 Summary:	GTK+ interface of pinentry
 Group:		System/Kernel and hardware
@@ -65,23 +70,25 @@ This package provides GTK+ interface of the dialog.
 
 %files		gtk2
 %_bindir/pinentry-gtk-2
+%endif
 
 #------------------------------------------------------------------------------
 
-%package	qt4
-Summary:	QT4 interface of pinentry
+%if %{with qt5}
+%package	qt5
+Summary:	QT5 interface of pinentry
 Group:		System/Kernel and hardware
 Provides:	%{name}-gui = %{version}-%{release}
 Requires:	%{name} = %{version}-%{release}
 Obsoletes:	%{name}-qt < 0.7.6-3
 
-%description	qt4
+%description	qt5
 %{name} is a collection of simple PIN or passphrase entry dialogs which
 utilize the Assuan protocol as described by the aegypten project.
 
 This package provides QT4 interface of the dialog.
 
-%files		qt4
+%files		qt5
 %{_bindir}/pinentry-qt*
 %endif
 #------------------------------------------------------------------------------
@@ -98,11 +105,11 @@ This package provides QT4 interface of the dialog.
 
 %build
 %configure \
-%if !%{with bootstrap}
-	--enable-pinentry-qt4 \
+%if %{with qt5}
+	--enable-pinentry-qt \
+%if %{with gtk2}
 	--enable-pinentry-gtk2 \
-	MOC=%{_bindir}/moc \
-	--with-qt-dir=%qt4dir \
+%endif
 %endif
 
 %make
@@ -112,8 +119,8 @@ This package provides QT4 interface of the dialog.
 
 install -p -m755 -D %{SOURCE2} %{buildroot}%{_bindir}/pinentry 
 
-%if !%{with bootstrap}
+%if %{with qt5}
 pushd %{buildroot}%{_bindir}
-ln -s pinentry-qt4 pinentry-qt
+ln -s pinentry-qt pinentry-qt5
 popd
 %endif
