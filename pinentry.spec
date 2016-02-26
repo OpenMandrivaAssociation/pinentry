@@ -1,11 +1,11 @@
-%bcond_without	qt5
-%bcond_without	gtk2
-%bcond_without	ncurses
+%bcond_without qt5
+%bcond_without gtk2
+%bcond_without ncurses
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
 Version:	0.9.6
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
@@ -55,40 +55,40 @@ utilize the Assuan protocol as described by the aegypten project.
 #------------------------------------------------------------------------------
 
 %if %{with gtk2}
-%package	gtk2
+%package gtk2
 Summary:	GTK+ interface of pinentry
 Group:		System/Kernel and hardware
 Provides:	%{name}-gui = %{version}-%{release}
 Requires:	%{name} = %{version}-%{release}
 Obsoletes:	%{name}-gtk
 
-%description	gtk2
+%description gtk2
 %{name} is a collection of simple PIN or passphrase entry dialogs which
 utilize the Assuan protocol as described by the aegypten project.
 
 This package provides GTK+ interface of the dialog.
 
-%files		gtk2
+%files gtk2
 %_bindir/pinentry-gtk-2
 %endif
 
 #------------------------------------------------------------------------------
 
 %if %{with qt5}
-%package	qt5
+%package qt5
 Summary:	QT5 interface of pinentry
 Group:		System/Kernel and hardware
 Provides:	%{name}-gui = %{version}-%{release}
 Requires:	%{name} = %{version}-%{release}
 Obsoletes:	%{name}-qt < 0.7.6-3
 
-%description	qt5
+%description qt5
 %{name} is a collection of simple PIN or passphrase entry dialogs which
 utilize the Assuan protocol as described by the aegypten project.
 
 This package provides QT4 interface of the dialog.
 
-%files		qt5
+%files qt5
 %{_bindir}/pinentry-qt*
 %endif
 #------------------------------------------------------------------------------
