@@ -5,7 +5,7 @@
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
 Version:	0.9.6
-Release:	4
+Release:	5
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
@@ -29,7 +29,7 @@ BuildRequires:	pkgconfig(ncurses)
 Obsoletes:	%{name}-curses < 0.8.0-2
 Suggests:	%{name}-gui
 
-%description 
+%description
 %{name} is a collection of simple PIN or passphrase entry dialogs which
 utilize the Assuan protocol as described by the aegypten project.
 
@@ -45,7 +45,7 @@ utilize the Assuan protocol as described by the aegypten project.
 %endif
 %endif
 
-%files 
+%files
 %doc README TODO ChangeLog NEWS AUTHORS THANKS
 %{_bindir}/pinentry
 %if %{with ncurses}
@@ -81,6 +81,9 @@ Group:		System/Kernel and hardware
 Provides:	%{name}-gui = %{version}-%{release}
 Requires:	%{name} = %{version}-%{release}
 Obsoletes:	%{name}-qt < 0.7.6-3
+# (tpg) upgrade from 2014.x
+Obsoletes:	%{name}-qt4 < 0.8.2-4
+Provides:	%{name}-qt4 = 0.8.2-5
 
 %description qt5
 %{name} is a collection of simple PIN or passphrase entry dialogs which
@@ -94,7 +97,7 @@ This package provides QT4 interface of the dialog.
 #------------------------------------------------------------------------------
 
 %prep
-%setup -q 
+%setup -q
 ./autogen.sh
 
 #% if !%{with bootstrap}
