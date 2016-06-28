@@ -41,10 +41,10 @@ utilize the Assuan protocol as described by the aegypten project.
 %endif
 %if !%{with gtk2}
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-gtk ||:
+%endif
 %if !%{with qt5}
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-qt ||:
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-qt5 ||:
-%endif
 %endif
 
 %files
@@ -112,11 +112,11 @@ This package provides QT4 interface of the dialog.
 %configure \
 %if %{with qt5}
 	--enable-pinentry-qt \
+%endif
 %if %{with gtk2}
 	--enable-pinentry-gtk2 \
+%endif
 	--enable-libsecret
-%endif
-%endif
 
 %make
 
