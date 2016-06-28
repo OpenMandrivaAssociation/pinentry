@@ -1,6 +1,7 @@
 %bcond_without qt5
 %bcond_without gtk2
 %bcond_without ncurses
+%define _disable_lto 1
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
@@ -22,6 +23,7 @@ BuildRequires:	qt5-devel
 
 %if %{with gtk2}
 BuildRequires:	pkgconfig(gtk+-2.0)
+BuildRequires:	pkgconfig(libsecret-1)
 %endif
 %if %{with ncurses}
 BuildRequires:	pkgconfig(ncurses)
@@ -79,7 +81,7 @@ This package provides GTK+ interface of the dialog.
 Summary:	QT5 interface of pinentry
 Group:		System/Kernel and hardware
 Provides:	%{name}-gui = %{version}-%{release}
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{EVRD}
 Obsoletes:	%{name}-qt < 0.7.6-3
 # (tpg) upgrade from 2014.x
 Obsoletes:	%{name}-qt4 < 0.8.2-4
@@ -112,6 +114,7 @@ This package provides QT4 interface of the dialog.
 	--enable-pinentry-qt \
 %if %{with gtk2}
 	--enable-pinentry-gtk2 \
+	--enable-libsecret
 %endif
 %endif
 
