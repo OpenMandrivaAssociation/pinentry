@@ -1,0 +1,18 @@
+--- pinentry-0.9.7/configure.ac.omv~	2016-06-28 12:37:04.370469197 +0200
++++ pinentry-0.9.7/configure.ac	2016-06-28 12:37:20.120628816 +0200
+@@ -599,11 +599,11 @@ AM_CONDITIONAL(BUILD_PINENTRY_W32, test
+ # Please change the order only after verifying that the preferred
+ # pinentry really is better (more feature-complete and more secure).
+ 
+-if test "$pinentry_gtk_2" = "yes"; then
+-  PINENTRY_DEFAULT=pinentry-gtk-2
++if test "$pinentry_qt" = "yes"; then
++  PINENTRY_DEFAULT=pinentry-qt
+ else
+-  if test "$pinentry_qt" = "yes"; then
+-    PINENTRY_DEFAULT=pinentry-qt
++  if test "$pinentry_gtk_2" = "yes"; then
++    PINENTRY_DEFAULT=pinentry-gtk-2
+   else
+     if test "$pinentry_gnome_3" = "yes"; then
+       PINENTRY_DEFAULT=pinentry-gnome3

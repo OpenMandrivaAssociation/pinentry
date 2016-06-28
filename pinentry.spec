@@ -6,12 +6,14 @@
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
 Version:	0.9.7
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
 Source0:	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.bz2
 Source2:	pinentry-wrapper
+Patch0:		pinentry-0.9.7-compile.patch
+Patch1:		pinentry-0.9.7-default-qt.patch
 Requires(pre):	update-alternatives
 BuildRequires:	cap-devel
 BuildRequires:	gettext-devel
@@ -100,6 +102,7 @@ This package provides QT4 interface of the dialog.
 
 %prep
 %setup -q
+%apply_patches
 ./autogen.sh
 
 #% if !%{with bootstrap}
