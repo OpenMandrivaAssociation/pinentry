@@ -1,0 +1,10 @@
+--- pinentry-0.9.7/m4/qt.m4.omv~	2016-06-28 12:22:19.833144116 +0200
++++ pinentry-0.9.7/m4/qt.m4	2016-06-28 12:24:24.074647623 +0200
+@@ -45,6 +45,7 @@ AC_DEFUN([FIND_QT],
+     if "$PKG_CONFIG" --variable qt_config Qt5Core | grep -q "reduce_relocations"; then
+       PINENTRY_QT_CFLAGS="$PINENTRY_QT_CFLAGS -fpic"
+     fi
++    PINENTRY_QT_CFLAGS="$PINENTRY_QT_CFLAGS -std=gnu++14"
+   fi
+   if test "$have_qt5_libs" = "yes"; then
+     AC_CHECK_TOOL(MOC, moc)
