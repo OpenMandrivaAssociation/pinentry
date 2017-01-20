@@ -5,8 +5,8 @@
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
-Version:	0.9.7
-Release:	4
+Version:	1.0.0
+Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
