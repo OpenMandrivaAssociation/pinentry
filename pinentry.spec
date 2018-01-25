@@ -6,7 +6,7 @@
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
 Version:	1.1.0
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
@@ -15,6 +15,7 @@ Source2:	pinentry-wrapper
 #Patch0:		pinentry-0.9.7-compile.patch
 Patch1:		pinentry-0.9.7-default-qt.patch
 Requires(pre):	chkconfig >= 1.10
+Requires(pre):	/bin/sh
 BuildRequires:	cap-devel
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(gpg-error)
