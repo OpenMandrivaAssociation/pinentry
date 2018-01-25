@@ -14,7 +14,7 @@ Source0:	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.bz2
 Source2:	pinentry-wrapper
 #Patch0:		pinentry-0.9.7-compile.patch
 Patch1:		pinentry-0.9.7-default-qt.patch
-Requires(pre):	update-alternatives
+Requires(pre):	chkconfig
 BuildRequires:	cap-devel
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(gpg-error)
