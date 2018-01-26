@@ -20,6 +20,7 @@ BuildRequires:	cap-devel
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	libassuan-devel
+BuildRequires:	git-core
 %if %{with qt5}
 BuildRequires:	qt5-devel
 %endif
