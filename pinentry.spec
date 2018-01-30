@@ -1,12 +1,15 @@
+# (tpg) temporaily disable for arm
+%ifnarch %{armx}
 %bcond_without qt5
 %bcond_without gtk2
+%endif
 %bcond_without ncurses
 %define _disable_lto 1
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
 Version:	1.1.0
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
