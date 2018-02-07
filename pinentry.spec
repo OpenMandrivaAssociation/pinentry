@@ -19,6 +19,8 @@ Source2:	pinentry-wrapper
 Patch1:		pinentry-0.9.7-default-qt.patch
 Requires(pre):	chkconfig >= 1.10
 Requires(pre):	/bin/sh
+Requires(pre):	coreutils
+Requires(pre):	util-linux
 BuildRequires:	cap-devel
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(gpg-error)
@@ -60,7 +62,7 @@ utilize the Assuan protocol as described by the aegypten project.
 %if %{with ncurses}
 %{_bindir}/pinentry-curses
 %{_infodir}/*.info*
-
+%endif
 #------------------------------------------------------------------------------
 
 %if %{with gtk2}
