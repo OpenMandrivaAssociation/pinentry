@@ -1,12 +1,11 @@
 %bcond_without qt5
 %bcond_without gtk2
 %bcond_without ncurses
-%define _disable_lto 1
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
 Version:	1.1.0
-Release:	7
+Release:	8
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
@@ -14,6 +13,7 @@ Source0:	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.bz2
 Source2:	pinentry-wrapper
 #Patch0:		pinentry-0.9.7-compile.patch
 Patch1:		pinentry-0.9.7-default-qt.patch
+Patch2:		pinentry-qt-Fix-use-of-dangling-pointer.patch
 Requires(pre):	chkconfig >= 1.10
 Requires(pre):	/bin/sh
 Requires(pre):	coreutils
@@ -105,15 +105,8 @@ This package provides QT4 interface of the dialog.
 #------------------------------------------------------------------------------
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 ./autogen.sh
-
-#% if !%{with bootstrap}
-#for f in qt4/*.moc; do
-#	%{_bindir}/moc ${f/.moc/.h} > ${f}
-#done
-#% endif
 
 %build
 %configure \
@@ -125,10 +118,10 @@ This package provides QT4 interface of the dialog.
 %endif
 	--enable-libsecret
 
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
 install -p -m755 -D %{SOURCE2} %{buildroot}%{_bindir}/pinentry 
 
