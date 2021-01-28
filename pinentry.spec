@@ -4,8 +4,8 @@
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
-Version:	1.1.0
-Release:	9
+Version:	1.1.1
+Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
@@ -13,7 +13,6 @@ Source0:	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.bz2
 Source2:	pinentry-wrapper
 #Patch0:		pinentry-0.9.7-compile.patch
 Patch1:		pinentry-0.9.7-default-qt.patch
-Patch2:		pinentry-qt-Fix-use-of-dangling-pointer.patch
 Requires(pre):	chkconfig >= 1.10
 Requires(pre):	/bin/sh
 Requires(pre):	coreutils
