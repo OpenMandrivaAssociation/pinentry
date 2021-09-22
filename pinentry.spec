@@ -4,7 +4,7 @@
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
-Version:	1.1.1
+Version:	1.2.0
 Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
