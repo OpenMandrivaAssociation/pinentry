@@ -5,7 +5,7 @@
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
 Version:	1.2.0
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
@@ -23,7 +23,11 @@ BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	libassuan-devel
 BuildRequires:	git-core
 %if %{with qt5}
-BuildRequires:	qt5-devel
+BuildRequires:	pkgconfig(Qt5Core)
+BuildRequires:	pkgconfig(Qt5Gui)
+BuildRequires:	pkgconfig(Qt5Widgets)
+BuildRequires:	pkgconfig(Qt5X11Extras)
+BuildRequires:	cmake(KF5Wayland)
 %endif
 
 %if %{with gtk2}
