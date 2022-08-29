@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/sh
 
 # Copyright (c) 2006 SUSE LINUX Products GmbH, Nuernberg, Germany.
 # Copyright (c) 2009 Fedora Project
@@ -14,7 +14,7 @@
 # Pavol Rusnak <prusnak@novell.com> 2009
 # Boris Ranto <branto@redhat.com> 2014
 #
-# use proper binary (pinentry-qt4, pinentry-qt, pinentry-gtk-2 or pinentry-curses)
+# use proper binary (pinentry-qt, pinentry-gnome, pinentry-gtk-2 or pinentry-curses)
 
 kde_running=
 arg=
@@ -32,22 +32,20 @@ done
 
 # export DISPLAY if pinentry is meant to be run on a different display
 # check the KDE_FULL_SESSION variable otherwise
-if [ -n "$display" -a "$DISPLAY" != "$display" ]; then
+if [ -n "$display" ] && [ "$DISPLAY" != "$display" ]; then
     export DISPLAY="$display"
 elif [ -n "$KDE_FULL_SESSION" ]; then
     kde_running=1
-    kde_ver="$KDE_SESSION_VERSION"
 fi
 
 # Check for presence of xprop binary
 type xprop >/dev/null 2>/dev/null
 XPROP=$?
 
-if [ -n "$DISPLAY" -a $XPROP -eq 0 ]; then
+if [ -n "$DISPLAY" ] && [ $XPROP -eq 0 ]; then
     xprop -root | grep "^KDE_FULL_SESSION" >/dev/null 2>/dev/null
     if test $? -eq 0; then
         kde_running=1
-        kde_ver="`xprop -root | sed -n 's/KDE_SESSION_VERSION(CARDINAL) = //p'`" 2>/dev/null
     fi
 fi
 
@@ -55,30 +53,26 @@ fi
 if [ -n "$PINENTRY_BINARY" ];
 then
 	export PINENTRY_BINARY="$PINENTRY_BINARY"
-# if KDE is detected and pinentry-qt4 exists, use pinentry-qt4
-elif [ -n "$kde_running" -a "$kde_ver"x = 4x -a -x /usr/bin/pinentry-qt4 ]
-then
-	export PINENTRY_BINARY="/usr/bin/pinentry-qt4"
 # if KDE is detected and pinentry-qt exists, use pinentry-qt
-elif [ -n "$kde_running" -a -x /usr/bin/pinentry-qt ]
+elif [ -n "$kde_running" ] && [ -x /usr/bin/pinentry-qt ]
 then
 	export PINENTRY_BINARY="/usr/bin/pinentry-qt"
 # otherwise test if pinentry-gnome3 is installed
-elif [ -n "$DISPLAY" -a -x /usr/bin/pinentry-gnome3 ]
+elif [ -n "$DISPLAY" ] && [ -x /usr/bin/pinentry-gnome3 ]
 then
 	export PINENTRY_BINARY="/usr/bin/pinentry-gnome3"
 # otherwise test if pinentry-gtk-2 is installed
-elif [ -n "$DISPLAY" -a -x /usr/bin/pinentry-gtk-2 ]
+elif [ -n "$DISPLAY" ] && [ -x /usr/bin/pinentry-gtk-2 ]
 then
 	export PINENTRY_BINARY="/usr/bin/pinentry-gtk-2"
-# otherwise test if pinentry-qt4 exists although KDE is not detected
-elif [ -n "$DISPLAY" -a -x /usr/bin/pinentry-qt4 ]
-then
-	export PINENTRY_BINARY="/usr/bin/pinentry-qt4"
 # otherwise test if pinentry-qt exists although KDE is not detected
-elif [ -n "$DISPLAY" -a -x /usr/bin/pinentry-qt ]
+elif [ -n "$DISPLAY" ] && [ -x /usr/bin/pinentry-qt ]
 then
 	export PINENTRY_BINARY="/usr/bin/pinentry-qt"
+# use pinentry-tty if installed
+elif [ -x /usr/bin/pinentry-tty ]
+then
+	export PINENTRY_BINARY="/usr/bin/pinentry-tty"
 # pinentry-curses is installed by default
 else
 	export PINENTRY_BINARY="/usr/bin/pinentry-curses"

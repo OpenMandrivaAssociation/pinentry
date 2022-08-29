@@ -1,26 +1,27 @@
 %bcond_without qt5
 %bcond_without gtk2
+%bcond_without gnome
 %bcond_without ncurses
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
-Version:	1.2.0
-Release:	2
+Version:	1.2.1
+Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
 Source0:	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.bz2
 Source2:	pinentry-wrapper
-#Patch0:		pinentry-0.9.7-compile.patch
+Patch0:		https://src.fedoraproject.org/rpms/pinentry/raw/rawhide/f/pinentry-1.1.1-coverity.patch
 Patch1:		pinentry-0.9.7-default-qt.patch
 Requires(pre):	chkconfig >= 1.10
 Requires(pre):	/bin/sh
 Requires(pre):	coreutils
 Requires(pre):	util-linux
-BuildRequires:	cap-devel
+BuildRequires:	pkgconfig(libcap)
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(gpg-error)
-BuildRequires:	libassuan-devel
+BuildRequires:	pkgconfig(libassuan)
 BuildRequires:	git-core
 %if %{with qt5}
 BuildRequires:	pkgconfig(Qt5Core)
@@ -29,13 +30,15 @@ BuildRequires:	pkgconfig(Qt5Widgets)
 BuildRequires:	pkgconfig(Qt5X11Extras)
 BuildRequires:	cmake(KF5Wayland)
 %endif
-
 %if %{with gtk2}
 BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	pkgconfig(libsecret-1)
 %endif
 %if %{with ncurses}
 BuildRequires:	pkgconfig(ncurses)
+%endif
+%if %{with gnome}
+BuildRequires:	pkgconfig(gcr-3)
 %endif
 Obsoletes:	%{name}-curses < 0.8.0-2
 Suggests:	%{name}-gui
@@ -51,6 +54,9 @@ utilize the Assuan protocol as described by the aegypten project.
 %if !%{with gtk2}
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-gtk ||:
 %endif
+%if !%{with gnome}
+%{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-gnome3 ||:
+%endif
 %if !%{with qt5}
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-qt ||:
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-qt5 ||:
@@ -59,9 +65,10 @@ utilize the Assuan protocol as described by the aegypten project.
 %files
 %doc README TODO ChangeLog NEWS AUTHORS THANKS
 %{_bindir}/pinentry
+%{_bindir}/pinentry-tty
 %if %{with ncurses}
 %{_bindir}/pinentry-curses
-%{_infodir}/*.info*
+%doc %{_infodir}/*.info*
 %endif
 #------------------------------------------------------------------------------
 
@@ -71,7 +78,7 @@ Summary:	GTK+ interface of pinentry
 Group:		System/Kernel and hardware
 Provides:	%{name}-gui = %{version}-%{release}
 Requires:	%{name} = %{version}-%{release}
-Obsoletes:	%{name}-gtk
+Obsoletes:	%{name}-gtk < 1.2.1
 
 %description gtk2
 %{name} is a collection of simple PIN or passphrase entry dialogs which
@@ -80,7 +87,7 @@ utilize the Assuan protocol as described by the aegypten project.
 This package provides GTK+ interface of the dialog.
 
 %files gtk2
-%_bindir/pinentry-gtk-2
+%{_bindir}/pinentry-gtk-2
 %endif
 
 #------------------------------------------------------------------------------
@@ -105,6 +112,26 @@ This package provides QT4 interface of the dialog.
 %files qt5
 %{_bindir}/pinentry-qt*
 %endif
+
+#------------------------------------------------------------------------------
+
+%if %{with gnome}
+%package gnome
+Summary:	GNOME 3 interface of pinentry
+Group:		System/Kernel and hardware
+Provides:	%{name}-gui = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
+
+%description gnome
+%{name} is a collection of simple PIN or passphrase entry dialogs which
+utilize the Assuan protocol as described by the aegypten project.
+
+This package provides GNOME 3 interface of the dialog.
+
+%files gnome
+%{_bindir}/pinentry-gnome3
+%endif
+
 #------------------------------------------------------------------------------
 
 %prep
@@ -119,17 +146,19 @@ This package provides QT4 interface of the dialog.
 %if %{with gtk2}
 	--enable-pinentry-gtk2 \
 %endif
-	--enable-libsecret
+%if %{with gnome}
+	--enable-pinentry-gnome3 \
+%endif
+	--enable-libsecret \
+	--enable-pinentry-tty
 
 %make_build
 
 %install
 %make_install
 
-install -p -m755 -D %{SOURCE2} %{buildroot}%{_bindir}/pinentry 
+install -p -m755 -D %{SOURCE2} %{buildroot}%{_bindir}/pinentry
 
 %if %{with qt5}
-pushd %{buildroot}%{_bindir}
-ln -s pinentry-qt pinentry-qt5
-popd
+ln -s pinentry-qt %{buildroot}%{_bindir}/pinentry-qt5
 %endif
