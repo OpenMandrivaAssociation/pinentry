@@ -2,11 +2,12 @@
 %bcond_without gtk2
 %bcond_without gnome
 %bcond_without ncurses
+%bcond_without fltk
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
 Version:	1.2.1
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
@@ -40,6 +41,9 @@ BuildRequires:	pkgconfig(ncurses)
 %if %{with gnome}
 BuildRequires:	pkgconfig(gcr-3)
 %endif
+%if %{with fltk}
+BuildRequires:	fltk-devel
+%endif
 Obsoletes:	%{name}-curses < 0.8.0-2
 Suggests:	%{name}-gui
 
@@ -60,6 +64,9 @@ utilize the Assuan protocol as described by the aegypten project.
 %if !%{with qt5}
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-qt ||:
 %{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-qt5 ||:
+%endif
+%if !%{with fltk}
+%{_sbindir}/update-alternatives --remove pinentry %{_bindir}/pinentry-fltk ||:
 %endif
 
 %files
@@ -134,6 +141,25 @@ This package provides GNOME 3 interface of the dialog.
 
 #------------------------------------------------------------------------------
 
+%if %{with fltk}
+%package fltk
+Summary:	FLTK interface of pinentry
+Group:		System/Kernel and hardware
+Provides:	%{name}-gui = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
+
+%description fltk
+%{name} is a collection of simple PIN or passphrase entry dialogs which
+utilize the Assuan protocol as described by the aegypten project.
+
+This package provides an FLTK interface of the dialog.
+
+%files fltk
+%{_bindir}/pinentry-fltk
+%endif
+
+#------------------------------------------------------------------------------
+
 %prep
 %autosetup -p1
 ./autogen.sh
@@ -142,12 +168,23 @@ This package provides GNOME 3 interface of the dialog.
 %configure \
 %if %{with qt5}
 	--enable-pinentry-qt \
+%else
+	--disable-pinentry-qt \
 %endif
 %if %{with gtk2}
 	--enable-pinentry-gtk2 \
+%else
+	--disable-pinentry-gtk2 \
 %endif
 %if %{with gnome}
 	--enable-pinentry-gnome3 \
+%else
+	--disable-pinentry-gnome3 \
+%endif
+%if %{with fltk}
+	--enable-pinentry-fltk \
+%else
+	--disable-pinentry-fltk \
 %endif
 	--enable-libsecret \
 	--enable-pinentry-tty
