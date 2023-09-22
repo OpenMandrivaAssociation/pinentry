@@ -7,7 +7,7 @@
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
 Version:	1.2.1
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
@@ -15,7 +15,6 @@ Source0:	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.bz2
 Source2:	pinentry-wrapper
 Patch0:		https://src.fedoraproject.org/rpms/pinentry/raw/rawhide/f/pinentry-1.1.1-coverity.patch
 Patch1:		pinentry-0.9.7-default-qt.patch
-Requires(pre):	chkconfig >= 1.10
 Requires(pre):	/bin/sh
 Requires(pre):	coreutils
 Requires(pre):	util-linux
