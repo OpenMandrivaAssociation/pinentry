@@ -27,6 +27,7 @@ Requires(pre):	coreutils
 Requires(pre):	util-linux
 BuildRequires:	pkgconfig(libcap)
 BuildRequires:	gettext-devel
+BuildRequires:	texinfo
 BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(libassuan)
 BuildRequires:	git-core
