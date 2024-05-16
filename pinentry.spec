@@ -5,7 +5,7 @@
 %bcond_without ncurses
 %bcond_without fltk
 
-%define gitdate 20240225
+#define gitdate 20240225
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
