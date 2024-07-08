@@ -9,15 +9,15 @@
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
-Version:	1.3.0
-Release:	%{?gitdate:0.%{gitdate}.}2
+Version:	1.3.1
+Release:	%{?gitdate:0.%{gitdate}.}1
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.gnupg.org/
 %if 0%{?gitdate:1}
 Source0:	https://github.com/gpg/pinentry/archive/refs/heads/master.tar.gz#/%{name}-%{gitdate}.tar.gz
 %else
-Source0:	ftp://ftp.gnupg.org/gcrypt/%{name}/%{name}-%{version}.tar.bz2
+Source0:	https://gnupg.org/ftp/gcrypt/%{name}/%{name}-%{version}.tar.bz2
 %endif
 Source2:	pinentry-wrapper
 Patch0:		https://src.fedoraproject.org/rpms/pinentry/raw/rawhide/f/pinentry-1.1.1-coverity.patch
@@ -87,6 +87,7 @@ utilize the Assuan protocol as described by the aegypten project.
 %doc README TODO ChangeLog NEWS AUTHORS THANKS
 %{_bindir}/pinentry
 %{_bindir}/pinentry-tty
+%{_datadir}/pixmaps/pinentry.png
 %if %{with ncurses}
 %{_bindir}/pinentry-curses
 %doc %{_infodir}/*.info*
