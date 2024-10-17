@@ -13,7 +13,7 @@ Version:	1.3.1
 Release:	%{?gitdate:0.%{gitdate}.}1
 License:	GPLv2+
 Group:		System/Kernel and hardware
-Url:		http://www.gnupg.org/
+Url:		https://www.gnupg.org/
 %if 0%{?gitdate:1}
 Source0:	https://github.com/gpg/pinentry/archive/refs/heads/master.tar.gz#/%{name}-%{gitdate}.tar.gz
 %else
