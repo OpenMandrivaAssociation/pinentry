@@ -10,7 +10,7 @@
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
 Version:	1.3.1
-Release:	%{?gitdate:0.%{gitdate}.}1
+Release:	%{?gitdate:0.%{gitdate}.}2
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		https://www.gnupg.org/
