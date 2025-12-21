@@ -25,6 +25,10 @@ Patch1:		pinentry-0.9.7-default-qt.patch
 Requires(pre):	/bin/sh
 Requires(pre):	coreutils
 Requires(pre):	util-linux
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
 BuildRequires:	pkgconfig(libcap)
 BuildRequires:	gettext-devel
 BuildRequires:	texinfo
