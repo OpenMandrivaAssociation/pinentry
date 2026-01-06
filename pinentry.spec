@@ -91,7 +91,6 @@ utilize the Assuan protocol as described by the aegypten project.
 %doc README TODO ChangeLog NEWS AUTHORS THANKS
 %{_bindir}/pinentry
 %{_bindir}/pinentry-tty
-%{_datadir}/pixmaps/pinentry.png
 %if %{with ncurses}
 %{_bindir}/pinentry-curses
 %doc %{_infodir}/*.info*
@@ -159,6 +158,7 @@ This package provides QT5 interface of the dialog.
 %files qt6
 %{_bindir}/pinentry-qt
 %{_datadir}/applications/org.gnupg.pinentry-qt.desktop
+%{_datadir}/pixmaps/pinentry.png
 %endif
 
 #------------------------------------------------------------------------------
