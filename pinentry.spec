@@ -9,7 +9,7 @@
 
 Summary:	Collection of simple PIN or passphrase entry dialogs
 Name:		pinentry
-Version:	1.3.1
+Version:	1.3.3
 Release:	%{?gitdate:0.%{gitdate}.}2
 License:	GPLv2+
 Group:		System/Kernel and hardware
